@@ -1,43 +1,65 @@
-# Astro Starter Kit: Basics
 
-```sh
-npm create astro@latest -- --template basics
-```
+<div align="center">
+  <img src="./public/cookie.png" alt="Digital Fortune Cookie" width="120"/>
+  
+  # 🍪 Digital Fortune Cookie
+  
+  _Unwrap your daily dose of randomness!_
+</div>
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Overview
 
-## 🚀 Project Structure
+**Digital Fortune Cookie** is a playful web app that delivers a new, outlandish daily life challenge every day—just like cracking open a fortune cookie, but with a twist! Each challenge is designed to surprise, amuse, and push you out of your comfort zone.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Features
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- 🥠 **Random Daily Challenges:** Get a unique, quirky challenge every day.
+- 🎲 **Endless Fun:** Hundreds of wild, creative prompts.
+- 🌈 **Beautiful Interface:** Simple, modern, and mobile-friendly design.
+- 🔄 **No Repeats:** Each day brings something new!
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Getting Started
 
-## 🧞 Commands
+1. **Clone the repository:**
+	```bash
+	git clone https://github.com/your-username/digital-fortune-cookie.git
+	cd digital-fortune-cookie
+	```
+2. **Install dependencies:**
+	```bash
+	npm install
+	```
+3. **Run the app locally:**
+	```bash
+	npm run dev
+	```
+4. **Open in your browser:**
+	Visit [http://localhost:3000](http://localhost:3000)
 
-All commands are run from the root of the project, from a terminal:
+## Project Structure
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
+- `src/pages/` — Main app pages
+- `src/components/` — UI components
+- `src/layouts/` — Layout templates
+- `public/` — Static assets (images, icons)
+
+## Example Challenge
+
+> _"Speak only in questions for the next hour!"_
+
+## Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+<div align="center">
+  <em>Made with ❤️ for fun and fortune!</em>
+</div>
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
