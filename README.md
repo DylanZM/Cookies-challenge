@@ -1,50 +1,46 @@
+# Astro Starter Kit: Basics
 
-# Digital Fortune Cookie Challenge App
-
-Welcome to the Digital Fortune Cookie app! This web app randomly assigns you outlandish daily life challenges, just like cracking open a fortune cookie—except the fortunes are wild tasks to spice up your day.
-
-## 🚀 Features
-
-- Get a new, random challenge every day
-- Fun, creative, and sometimes absurd tasks
-- Simple, clean interface
-- Built with [Astro](https://astro.build) for fast performance
-
-## 📂 Project Structure
-
+```sh
+npm create astro@latest -- --template basics
 ```
-/ (root)
+
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+
+## 🚀 Project Structure
+
+Inside of your Astro project, you'll see the following folders and files:
+
+```text
+/
 ├── public/
 │   └── favicon.svg
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── layouts/
-│   └── pages/
+├── src
+│   ├── assets
+│   │   └── astro.svg
+│   ├── components
+│   │   └── Welcome.astro
+│   ├── layouts
+│   │   └── Layout.astro
+│   └── pages
+│       └── index.astro
 └── package.json
 ```
 
-## 🧞 Usage
+To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
-All commands are run from the root of the project:
+## 🧞 Commands
 
-| Command            | Action                                    |
-|--------------------|-------------------------------------------|
-| `npm install`      | Install dependencies                      |
-| `npm run dev`      | Start local dev server at `localhost:4321`|
-| `npm run build`    | Build your production site to `./dist/`   |
-| `npm run preview`  | Preview your build locally                |
+All commands are run from the root of the project, from a terminal:
 
-## ✨ How it Works
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-1. Open the app in your browser.
-2. Click the button to receive your daily challenge.
-3. Try to complete the challenge and share your experience!
+## 👀 Want to learn more?
 
-## 🤝 Contributing
-
-Pull requests and suggestions for new challenges are welcome!
-
-## 📄 License
-
-MIT
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
