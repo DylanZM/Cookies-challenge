@@ -3,16 +3,25 @@
 
 
 
-
-
-
-
-
-
-
 body{
     
-font-family: 'Inter', 'Fira Code', 'Libertinus Sans', 'Noto Sans JP', sans-serif;
+font-family: "Inter", sans-serif;
+
+}
 
 
+:root {
+    --cookie-dough: #F5E1C6;
+    --cookie-edge: #D2A679;
+    --chocolate-chip: #7B4B27;
+    --cookie-cream: #FFF8F0;
+    --cookie-accent: #E7CBA9;
+    --cookie-text: #5C4326;
+    --cookie-success: #F2CC8F;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--cookie-cream);
+    color: var(--cookie-text);
 }
