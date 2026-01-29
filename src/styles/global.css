@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@100..900&display=swap');
 @import "tailwindcss";
 
@@ -23,5 +24,20 @@ font-family: "Inter", sans-serif;
 body {
     font-family: "Inter", sans-serif;
     background: var(--cookie-cream);
-    color: var(--cookie-text);
+}
+
+.menu-underline::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background: var(--cookie-text);
+    transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 1px;
+}
+.menu-underline:hover::after {
+    width: 100%;
 }
