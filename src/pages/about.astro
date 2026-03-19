@@ -1,82 +1,93 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import "../styles/global.css";
 ---
 
 <Layout>
-<div class="retro-page">
-  <Header activePage="about" />
+  <div class="retro-page">
+    <Header activePage="about" />
 
-  <main class="rpg-style">
-    
-    <div class="pixel-box dialog-box" style="margin-bottom: 2rem;">
-      <h1 class="text-retro-highlight" style="font-size: 1.4rem; margin-bottom: 1rem;">
-        > MANUAL DE USUARIO v1.0
-      </h1>
-      <p style="font-size: 0.8rem; line-height: 2;">
-        BIENVENIDO, JUGADOR.<br/><br/>
-        COOKIE CHALLENGE ES UN SISTEMA DE MISIONES DIARIAS ENCAPSULADAS EN UNA GALLETA DE LA FORTUNA DIGITAL.<br/><br/>
-        NO IMPORTA SI EL RETO ES GRANDE O PEQUEÑO. LO IMPORTANTE ES CUMPLIRLO Y SUBIR DE NIVEL EN LA VIDA REAL.
-      </p>
-    </div>
+    <main class="rpg-style">
+      <div class="pixel-box dialog-box" style="margin-bottom: 2rem;">
+        <h1
+          class="text-retro-highlight"
+          style="font-size: 1.4rem; margin-bottom: 1rem;"
+        >&gt; MANUAL DE USUARIO v1.0
+        </h1>
+        <p style="font-size: 0.8rem; line-height: 2;">
+          BIENVENIDO, JUGADOR.<br /><br />
+          COOKIE CHALLENGE ES UN SISTEMA DE MISIONES DIARIAS ENCAPSULADAS EN UNA
+          GALLETA DE LA FORTUNA DIGITAL.<br /><br />
+          NO IMPORTA SI EL RETO ES GRANDE O PEQUEÑO. LO IMPORTANTE ES CUMPLIRLO Y
+          SUBIR DE NIVEL EN LA VIDA REAL.
+        </p>
+      </div>
 
-    <!-- Instruction Steps -->
-    <div class="pixel-box" style="margin-bottom: 2rem; border-color: var(--cookie-light);">
-      <h2 style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;">
-        [CÓMO JUGAR]
-      </h2>
+      <!-- Instruction Steps -->
+      <div
+        class="pixel-box"
+        style="margin-bottom: 2rem; border-color: var(--cookie-light);"
+      >
+        <h2
+          style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;"
+        >
+          [CÓMO JUGAR]
+        </h2>
 
-      <div class="step">
-        <div class="step-num text-retro-highlight">01.</div>
-        <div class="step-text">
-          <strong>VISITA LA SECCIÓN GALLETA</strong><br/>
-          INGRESA AL MENÚ DE NAVEGACIÓN PRINCIPAL.
+        <div class="step">
+          <div class="step-num text-retro-highlight">01.</div>
+          <div class="step-text">
+            <strong>VISITA LA SECCIÓN GALLETA</strong><br />
+            INGRESA AL MENÚ DE NAVEGACIÓN PRINCIPAL.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num text-retro-highlight">02.</div>
+          <div class="step-text">
+            <strong>CLICK PARA ABRIR</strong><br />
+            LA GALLETA REVELARÁ EL RETO DEL DÍA.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num text-retro-highlight">03.</div>
+          <div class="step-text">
+            <strong>ESPERA AL PRÓXIMO TURNO</strong><br />
+            EL SERVIDOR SE REINICIA CADA MEDIANOCHE. SÓLO UNA MISIÓN POR DÍA.
+          </div>
         </div>
       </div>
 
-      <div class="step">
-        <div class="step-num text-retro-highlight">02.</div>
-        <div class="step-text">
-          <strong>CLICK PARA ABRIR</strong><br/>
-          LA GALLETA REVELARÁ EL RETO DEL DÍA.
+      <!-- System Specs -->
+      <div class="pixel-box" style="text-align: center;">
+        <h2
+          style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;"
+        >
+          [ESPECIFICACIONES DEL SISTEMA]
+        </h2>
+        <div
+          style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;"
+        >
+          <span class="tech-tag">ASTRO V.5</span>
+          <span class="tech-tag">TAILWIND 4</span>
+          <span class="tech-tag">LOCALSTORAGE I/O</span>
+          <span class="tech-tag">CSS PIXEL ART ENGINE</span>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <a href="/cookies" class="pixel-btn"> ▶ INICIAR PARTIDA</a>
         </div>
       </div>
+    </main>
 
-      <div class="step">
-        <div class="step-num text-retro-highlight">03.</div>
-        <div class="step-text">
-          <strong>ESPERA AL PRÓXIMO TURNO</strong><br/>
-          EL SERVIDOR SE REINICIA CADA MEDIANOCHE. SÓLO UNA MISIÓN POR DÍA.
-        </div>
-      </div>
-    </div>
-
-    <!-- System Specs -->
-    <div class="pixel-box" style="text-align: center;">
-      <h2 style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;">
-        [ESPECIFICACIONES DEL SISTEMA]
-      </h2>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-        <span class="tech-tag">ASTRO V.5</span>
-        <span class="tech-tag">TAILWIND 4</span>
-        <span class="tech-tag">LOCALSTORAGE I/O</span>
-        <span class="tech-tag">CSS PIXEL ART ENGINE</span>
-      </div>
-
-      <div style="margin-top: 2rem;">
-        <a href="/cookies" class="pixel-btn">
-          ▶ INICIAR PARTIDA
-        </a>
-      </div>
-    </div>
-
-  </main>
-
-  <footer style="text-align: center; margin-top: 4rem; padding: 2rem; font-size: 0.6rem; opacity: 0.5;">
-    (C) 2024 COOKIE CHALLENGE SYSTEM
-  </footer>
-</div>
+    <footer
+      style="text-align: center; margin-top: 4rem; padding: 2rem; font-size: 0.6rem; opacity: 0.5;"
+    >
+      (C) 2024 COOKIE CHALLENGE SYSTEM
+    </footer>
+  </div>
 </Layout>
 
 <style>

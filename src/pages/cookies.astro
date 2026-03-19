@@ -13,7 +13,7 @@ import '../styles/global.css';
     
     <div class="stage-header pixel-box">
       <h1 class="text-retro-highlight" style="font-size: 1.2rem; margin-bottom: 0.5rem;">
-        > DAILY QUEST ENCOUNTER
+        &gt; DAILY QUEST ENCOUNTER
       </h1>
       <p id="status-msg" style="font-size: 0.7rem; opacity: 0.8;">
         CLICK LA GALLETA PARA DESCUBRIR TU RETO
@@ -121,6 +121,21 @@ import '../styles/global.css';
 
   if (!unopened || !broken || !card || !challengeTxt || !dateTxt) throw new Error('DOM Missing');
 
+  // Load equipped cookie variant from localStorage
+  const savedColorsStr = localStorage.getItem('cookie_variant');
+  if (savedColorsStr) {
+    try {
+      const colors = JSON.parse(savedColorsStr);
+      [unopened, broken].forEach(el => {
+        el.style.setProperty('--p-dough', colors.dough);
+        el.style.setProperty('--p-chip', colors.chip);
+        el.style.setProperty('--p-light', colors.light);
+        el.style.setProperty('--p-dark', colors.dark);
+        el.style.setProperty('--p-edge', colors.edge);
+      });
+    } catch(e) { console.error('Error loading cookie variant', e); }
+  }
+
   const today = new Date().toISOString().split('T')[0];
   const savedDate = localStorage.getItem('cookie_last_date');
   const savedChallenge = localStorage.getItem('cookie_current_challenge');
@@ -130,8 +145,8 @@ import '../styles/global.css';
   }).toUpperCase();
 
   function showReward(challenge: string, isImmediate: boolean) {
-    challengeTxt.textContent = challenge;
-    dateTxt.textContent = formattedDate;
+    challengeTxt!.textContent = challenge;
+    dateTxt!.textContent = formattedDate;
 
     if (isImmediate) {
       unopened!.style.display = 'none';

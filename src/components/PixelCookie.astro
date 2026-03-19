@@ -1,21 +1,19 @@
 ---
 interface Props {
   scale?: number;
-  variant?: 'base' | 'left-half' | 'right-half';
+  variant?: "base" | "left-half" | "right-half";
   chipColor?: string;
   doughColor?: string;
   edgeColor?: string;
 }
-const { 
-  scale = 4, 
-  variant = 'base',
-  chipColor = 'var(--choc-chip)',
-  doughColor = 'var(--cookie-base)',
-  edgeColor = 'var(--cookie-edge)'
+const {
+  scale = 4,
+  variant = "base",
+  chipColor = "var(--choc-chip)",
+  doughColor = "var(--cookie-base)",
+  edgeColor = "var(--cookie-edge)",
 } = Astro.props;
 
-// A 14x14 pixel art cookie layout
-// E = Edge, D = Dough, C = Chip, L = Light Dough, _ = transparent
 const rawGrid = [
   "____EEEEEE____",
   "__EEDDDDLAEE__",
@@ -29,7 +27,7 @@ const rawGrid = [
   "_EDDDCDDDDDAEE",
   "_EEDDDDDDAAAEE",
   "__EEDDDAAAAAE_",
-  "____EEEEEEEE__"
+  "____EEEEEEEE__",
 ];
 
 // Left half grid (for breaking animation)
@@ -46,10 +44,9 @@ const leftGrid = [
   "_EDDDC________",
   "_EEDDD________",
   "__EEDD________",
-  "____EEE_______"
+  "____EEE_______",
 ];
 
-// Right half grid (for breaking animation)
 const rightGrid = [
   "_______EEE____",
   "_______DLAEE__",
@@ -63,28 +60,30 @@ const rightGrid = [
   "_______DDAAEE",
   "_______DAAAEE",
   "_______AAAAE_",
-  "_______EEEEE__"
+  "_______EEEEE__",
 ];
 
-const gridToUse = variant === 'left-half' ? leftGrid 
-                : variant === 'right-half' ? rightGrid 
-                : rawGrid;
+const gridToUse =
+  variant === "left-half"
+    ? leftGrid
+    : variant === "right-half"
+    ? rightGrid
+    : rawGrid;
 
-// We build the box-shadow string
 let boxShadows: string[] = [];
 
 for (let y = 0; y < gridToUse.length; y++) {
   let row = gridToUse[y] || "";
   for (let x = 0; x < row.length; x++) {
-    const char = row[x] || '_';
-    if (char !== '_') {
+    const char = row[x] || "_";
+    if (char !== "_") {
       let color = 'transparent';
-      if (char === 'E') color = edgeColor;
-      if (char === 'D') color = doughColor;
-      if (char === 'L') color = 'var(--cookie-light)';
-      if (char === 'A') color = 'var(--cookie-dark)';
-      if (char === 'C') color = chipColor;
-      
+      if (char === 'E') color = 'var(--p-edge, #824715)';
+      if (char === 'D') color = 'var(--p-dough, #d28c46)';
+      if (char === 'L') color = 'var(--p-light, #e6ab67)';
+      if (char === 'A') color = 'var(--p-dark, #b36b2b)';
+      if (char === 'C') color = 'var(--p-chip, #3a1f0b)';
+
       const pxX = x * scale;
       const pyY = y * scale;
       boxShadows.push(`${pxX}px ${pyY}px 0 ${scale}px ${color}`);
@@ -92,15 +91,22 @@ for (let y = 0; y < gridToUse.length; y++) {
   }
 }
 
-const shadowString = boxShadows.join(', ');
+const shadowString = boxShadows.join(", ");
 ---
 
-<div class="pixel-cookie-wrap" style={`width: ${14 * scale}px; height: ${13 * scale}px;`}>
-  <div class="pixel-layer" style={`
+<div
+  class="pixel-cookie-wrap"
+  style={`width: ${14 * scale}px; height: ${13 * scale}px;`}
+>
+  <div
+    class="pixel-layer"
+    style={`
     width: ${scale}px; 
     height: ${scale}px; 
     box-shadow: ${shadowString};
-  `}></div>
+  `}
+  >
+  </div>
 </div>
 
 <style>
@@ -110,6 +116,7 @@ const shadowString = boxShadows.join(', ');
   }
   .pixel-layer {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
   }
 </style>
