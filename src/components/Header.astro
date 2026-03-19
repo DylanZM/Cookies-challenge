@@ -1,39 +1,46 @@
 ---
-import PixelCookie from './PixelCookie.astro';
+import PixelCookie from "./PixelCookie.astro";
 
 interface Props {
   activePage?: string;
 }
-const { activePage = '' } = Astro.props;
+const { activePage = "" } = Astro.props;
 ---
 
 <header class="retro-header pixel-box">
   <div class="header-inner">
-    
-    <!-- Retro Logo -->
     <a href="/" class="logo-link">
       <div class="logo-icon float-pixel">
         <PixelCookie scale={2} />
       </div>
       <div class="logo-text">
-        <span class="text-retro-highlight">COOKIE</span><br/>
-        <span style="font-size: 0.6em; color: var(--cookie-edge);">CHALLENGE</span>
+        <span class="text-retro-highlight">COOKIE</span><br />
+        <span style="font-size: 0.6em; color: var(--cookie-edge);"
+          >CHALLENGE</span
+        >
       </div>
     </a>
 
-    <!-- Nav links -->
     <nav class="retro-nav">
-      <a href="/" class={`pixel-nav-link ${activePage === 'home' ? 'active' : ''}`}>
+      <a
+        href="/"
+        class={`pixel-nav-link ${activePage === "home" ? "active" : ""}`}
+      >
         [ HOME ]
       </a>
-      <a href="/cookies" class={`pixel-nav-link ${activePage === 'cookies' ? 'active' : ''}`}>
+      <a
+        href="/cookies"
+        class={`pixel-nav-link ${activePage === "cookies" ? "active" : ""}`}
+      >
         [ COOKIE ]
       </a>
-      <a href="/about" class={`pixel-nav-link ${activePage === 'about' ? 'active' : ''}`}>
+      <a
+        href="/about"
+        class={`pixel-nav-link ${activePage === "about" ? "active" : ""}`}
+      >
         [ INFO ]
       </a>
     </nav>
-
   </div>
 </header>
 
@@ -83,9 +90,15 @@ const { activePage = '' } = Astro.props;
     color: var(--text-highlight);
     text-shadow: 2px 2px 0 var(--ui-shadow);
   }
-  
+
   @media (max-width: 768px) {
-    .header-inner { flex-direction: column; gap: 1rem; }
-    .retro-nav { gap: 1rem; font-size: 0.65rem; }
+    .header-inner {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .retro-nav {
+      gap: 1rem;
+      font-size: 0.65rem;
+    }
   }
 </style>
