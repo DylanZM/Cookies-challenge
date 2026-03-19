@@ -113,7 +113,7 @@ h6 {
 /* text highlights */
 .text-retro-highlight {
   color: var(--text-highlight);
-  text-shadow: calc(var(--px) * 1) calc(var(--px) * 1) 0 var(--ui-shadow);
+  text-shadow: 2px 2px 0px var(--ui-shadow), 0 0 8px rgba(255,184,77,0.4);
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -175,4 +175,33 @@ h6 {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* ─────────────────────────────────────────────────────────
+   EFFECTS: CRT & STARS
+   ───────────────────────────────────────────────────────── */
+.crt-overlay {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+  position: fixed;
+  inset: 0;
+  opacity: 0.8;
+}
+
+.pixel-star {
+  position: absolute;
+  width: var(--px);
+  height: var(--px);
+  background-color: var(--text-primary);
+  opacity: 0;
+  animation: twinkle 4s infinite linear;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0; }
+  5% { opacity: 1; text-shadow: 0 0 4px var(--text-primary); }
+  10% { opacity: 0; }
+  100% { opacity: 0; }
 }

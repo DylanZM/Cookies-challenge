@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import PixelCookie from "../components/PixelCookie.astro";
+import StreakCounter from "../components/StreakCounter.astro";
 import "../styles/global.css";
 ---
 
@@ -11,22 +12,31 @@ import "../styles/global.css";
 
     <main class="game-stage">
       <div class="stage-header pixel-box">
-        <h1
-          class="text-retro-highlight"
-          style="font-size: 1.2rem; margin-bottom: 0.5rem;"
-        >
-          &gt; DAILY QUEST ENCOUNTER
-        </h1>
-        <p id="status-msg" style="font-size: 0.7rem; opacity: 0.8;">
-          CLICK THE COOKIE TO REVEAL YOUR CHALLENGE
-        </p>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1
+              class="text-retro-highlight"
+              style="font-size: 1.2rem; margin-bottom: 0.5rem;"
+            >
+              &gt; DAILY QUEST ENCOUNTER
+            </h1>
+            <p id="status-msg" style="font-size: 0.7rem; opacity: 0.8;">
+              CLICK THE COOKIE TO REVEAL YOUR CHALLENGE
+            </p>
+          </div>
+          <StreakCounter />
+        </div>
       </div>
 
       <!-- Gameplay Area -->
       <div
         class="interactive-area pixel-box"
-        style="margin-top: 2rem; min-height: 400px; display: flex; align-items: center; justify-content: center; position: relative;"
+        style="margin-top: 2rem; min-height: 400px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;"
+        id="game-area"
       >
+        <!-- Cookie Crumbs Container -->
+        <div id="crumbs-container" style="position: absolute; inset: 0; pointer-events: none; z-index: 15;"></div>
+        
         <!-- Unopened Cookie (Full) -->
         <div
           id="cookie-unopened"
@@ -143,6 +153,47 @@ import "../styles/global.css";
   .blink-fast {
     animation: blink 0.5s steps(2, end) infinite;
   }
+
+  /* ── Cookie Crumb Particles ── */
+  .cookie-crumb {
+    position: absolute;
+    pointer-events: none;
+    z-index: 15;
+    image-rendering: pixelated;
+  }
+
+  @keyframes crumb-burst-1 {
+    0% {
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes crumb-burst-2 {
+    0% {
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.5) rotate(-360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes crumb-burst-3 {
+    0% {
+      transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2) rotate(180deg);
+      opacity: 0;
+    }
+  }
 </style>
 
 <script>
@@ -184,6 +235,55 @@ import "../styles/global.css";
     })
     .toUpperCase();
 
+  function createCookieCrumbs() {
+    const container = document.getElementById('crumbs-container');
+    const unopenedRect = unopened!.getBoundingClientRect();
+    const containerRect = container!.getBoundingClientRect();
+    
+    const centerX = unopenedRect.left + unopenedRect.width / 2 - containerRect.left;
+    const centerY = unopenedRect.top + unopenedRect.height / 2 - containerRect.top;
+
+    const crumbCount = 20;
+    const colors = [
+      'var(--p-dough)', 
+      'var(--p-light)', 
+      'var(--p-dark)',
+      'var(--p-chip)'
+    ];
+
+    for (let i = 0; i < crumbCount; i++) {
+      const crumb = document.createElement('div');
+      crumb.className = 'cookie-crumb';
+      
+      const size = 8 + Math.random() * 16;
+      crumb.style.width = `${size}px`;
+      crumb.style.height = `${size}px`;
+      crumb.style.background = colors[Math.floor(Math.random() * colors.length)];
+      crumb.style.left = `${centerX}px`;
+      crumb.style.top = `${centerY}px`;
+      
+      const angle = (Math.PI * 2 * i) / crumbCount;
+      const distance = 100 + Math.random() * 150;
+      const dx = Math.cos(angle) * distance;
+      const dy = Math.sin(angle) * distance;
+      
+      crumb.style.setProperty('--dx', `${dx}px`);
+      crumb.style.setProperty('--dy', `${dy}px`);
+      
+      const animations = ['crumb-burst-1', 'crumb-burst-2', 'crumb-burst-3'];
+      const randomAnim = animations[Math.floor(Math.random() * animations.length)];
+      crumb.style.animation = `${randomAnim} 1s steps(8, end) forwards`;
+      crumb.style.animationDelay = `${i * 0.02}s`;
+      
+      // Add box-shadow for depth
+      crumb.style.boxShadow = '2px 2px 0 rgba(0,0,0,0.3)';
+      
+      container!.appendChild(crumb);
+      
+      setTimeout(() => crumb.remove(), 1200);
+    }
+  }
+
   function showReward(challenge: string, isImmediate: boolean) {
     challengeTxt!.textContent = challenge;
     dateTxt!.textContent = formattedDate;
@@ -192,18 +292,28 @@ import "../styles/global.css";
       unopened!.style.display = "none";
       card!.style.display = "block";
     } else {
+      // Create crumb particles
+      createCookieCrumbs();
+      
       // Animate break
-      unopened!.style.display = "none";
-      broken!.style.display = "block";
-      broken!.classList.add("anim-break");
+      setTimeout(() => {
+        unopened!.style.display = "none";
+        broken!.style.display = "block";
+        broken!.classList.add("anim-break");
+      }, 100);
 
       setTimeout(() => {
         card!.style.display = "block";
-      }, 600);
+      }, 700);
     }
 
     if (statusMsg) statusMsg.textContent = "QUEST DISCOVERED";
     if (alreadyHint) alreadyHint.style.display = "block";
+    
+    // Increment streak when quest is revealed
+    if (typeof (window as any).incrementStreak === 'function') {
+      (window as any).incrementStreak();
+    }
   }
 
   const handleOpen = () => {
