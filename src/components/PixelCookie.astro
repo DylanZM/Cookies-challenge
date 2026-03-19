@@ -1,0 +1,115 @@
+---
+interface Props {
+  scale?: number;
+  variant?: 'base' | 'left-half' | 'right-half';
+  chipColor?: string;
+  doughColor?: string;
+  edgeColor?: string;
+}
+const { 
+  scale = 4, 
+  variant = 'base',
+  chipColor = 'var(--choc-chip)',
+  doughColor = 'var(--cookie-base)',
+  edgeColor = 'var(--cookie-edge)'
+} = Astro.props;
+
+// A 14x14 pixel art cookie layout
+// E = Edge, D = Dough, C = Chip, L = Light Dough, _ = transparent
+const rawGrid = [
+  "____EEEEEE____",
+  "__EEDDDDLAEE__",
+  "_EDDCCDDLAAE__",
+  "_EDDDDLDLAAE__",
+  "EDDCDDDDDDAAE_",
+  "EDDDDDDDCDDAE_",
+  "EEDDCDDDDDAAE_",
+  "EDDDDDCLDDAAE_",
+  "EDCCDDDDDDDAE_",
+  "_EDDDCDDDDDAEE",
+  "_EEDDDDDDAAAEE",
+  "__EEDDDAAAAAE_",
+  "____EEEEEEEE__"
+];
+
+// Left half grid (for breaking animation)
+const leftGrid = [
+  "____EEE_______",
+  "__EEDDD_______",
+  "_EDDCC________",
+  "_EDDDD________",
+  "EDDCDD________",
+  "EDDDDD________",
+  "EEDDCD________",
+  "EDDDDD________",
+  "EDCCDD________",
+  "_EDDDC________",
+  "_EEDDD________",
+  "__EEDD________",
+  "____EEE_______"
+];
+
+// Right half grid (for breaking animation)
+const rightGrid = [
+  "_______EEE____",
+  "_______DLAEE__",
+  "______DDLAAE__",
+  "______LDLAAE__",
+  "_______DDAAE_",
+  "_______DCDDAE_",
+  "_______DDAAE_",
+  "______CLDDAAE_",
+  "_______DCDAE_",
+  "_______DDAAEE",
+  "_______DAAAEE",
+  "_______AAAAE_",
+  "_______EEEEE__"
+];
+
+const gridToUse = variant === 'left-half' ? leftGrid 
+                : variant === 'right-half' ? rightGrid 
+                : rawGrid;
+
+// We build the box-shadow string
+let boxShadows: string[] = [];
+
+for (let y = 0; y < gridToUse.length; y++) {
+  let row = gridToUse[y] || "";
+  for (let x = 0; x < row.length; x++) {
+    const char = row[x] || '_';
+    if (char !== '_') {
+      let color = 'transparent';
+      if (char === 'E') color = edgeColor;
+      if (char === 'D') color = doughColor;
+      if (char === 'L') color = 'var(--cookie-light)';
+      if (char === 'A') color = 'var(--cookie-dark)';
+      if (char === 'C') color = chipColor;
+      
+      const pxX = x * scale;
+      const pyY = y * scale;
+      boxShadows.push(`${pxX}px ${pyY}px 0 ${scale}px ${color}`);
+    }
+  }
+}
+
+const shadowString = boxShadows.join(', ');
+---
+
+<div class="pixel-cookie-wrap" style={`width: ${14 * scale}px; height: ${13 * scale}px;`}>
+  <div class="pixel-layer" style={`
+    width: ${scale}px; 
+    height: ${scale}px; 
+    box-shadow: ${shadowString};
+  `}></div>
+</div>
+
+<style>
+  .pixel-cookie-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .pixel-layer {
+    position: absolute;
+    top: 0; left: 0;
+  }
+</style>

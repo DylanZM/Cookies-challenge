@@ -1,43 +1,139 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
+:root {
+  --bg-color: #2b1f15;
+  --text-primary: #f2e2ce;
+  --text-highlight: #ffb84d;
+  
+  --cookie-base: #d28c46;
+  --cookie-light: #e6ab67;
+  --cookie-dark: #b36b2b;
+  --cookie-edge: #824715;
+  --choc-chip: #3a1f0b;
+  
+  /* Retro UI colors */
+  --ui-bg: #4a3424;
+  --ui-border: #1a1007;
+  --ui-primary: #d28c46;
+  --ui-hover: #e6ab67;
+  --ui-shadow: #1a1007;
 
-
-body{
-    
-font-family: "Inter", sans-serif;
-
+  /* Pixel size multiplier */
+  --px: 4px; 
 }
 
-
-:root {
-    --cookie-dough: #F5E1C6;
-    --cookie-edge: #D2A679;
-    --chocolate-chip: #7B4B27;
-    --cookie-cream: #FFF8F0;
-    --cookie-accent: #E7CBA9;
-    --cookie-text: #5C4326;
-    --cookie-success: #F2CC8F;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 body {
-    font-family: "Inter", sans-serif;
-    background: var(--cookie-cream);
+  font-family: 'Press Start 2P', cursive;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
 }
 
-.menu-underline::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0%;
-    height: 2px;
-    background: var(--cookie-text);
-    transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
-    border-radius: 1px;
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.4;
+  text-transform: uppercase;
 }
-.menu-underline:hover::after {
-    width: 100%;
+
+/* ─────────────────────────────────────────────────────────
+   PIXEL ART UTILITIES
+   ───────────────────────────────────────────────────────── */
+
+/* Brutalist Pixel Border Frame */
+.pixel-box {
+  background-color: var(--ui-bg);
+  border: var(--px) solid var(--ui-border);
+  box-shadow: 
+    calc(var(--px) * 2) calc(var(--px) * 2) 0 0 var(--ui-shadow);
+  padding: 2rem;
+  position: relative;
+  image-rendering: pixelated;
+}
+
+/* Internal inset shadow for 8-bit depth */
+.pixel-box::inset {
+  box-shadow: inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0,0,0,0.3),
+              inset var(--px) var(--px) 0 0 rgba(255,255,255,0.1);
+}
+
+/* Retro Button */
+.pixel-btn {
+  display: inline-block;
+  background-color: var(--ui-primary);
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 1rem 1.5rem;
+  border: calc(var(--px) * 1) solid var(--ui-border);
+  box-shadow: 
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0,0,0,0.4),
+    inset var(--px) var(--px) 0 0 rgba(255,255,255,0.4),
+    calc(var(--px) * 2) calc(var(--px) * 2) 0 0 var(--ui-shadow);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  image-rendering: pixelated;
+}
+
+.pixel-btn:hover {
+  background-color: var(--ui-hover);
+}
+
+.pixel-btn:active {
+  transform: translate(calc(var(--px) * 2), calc(var(--px) * 2));
+  box-shadow: 
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0,0,0,0.4),
+    inset var(--px) var(--px) 0 0 rgba(255,255,255,0.4),
+    0 0 0 0 var(--ui-shadow);
+}
+
+.pixel-btn-outline {
+  background-color: transparent;
+  color: var(--text-highlight);
+}
+.pixel-btn-outline:hover {
+  background-color: rgba(255,184,77,0.1);
+}
+
+/* Text Highlights */
+.text-retro-highlight {
+  color: var(--text-highlight);
+  text-shadow: calc(var(--px) * 1) calc(var(--px) * 1) 0 var(--ui-shadow);
+}
+
+/* ─────────────────────────────────────────────────────────
+   KEYFRAMES
+   ───────────────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.cursor-blink::after {
+  content: "█";
+  animation: blink 1s step-end infinite;
+  color: var(--text-highlight);
+  margin-left: 4px;
+}
+
+@keyframes float-pixel {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(var(--px)); }
+}
+.float-pixel {
+  animation: float-pixel 1s steps(2, end) infinite;
+}
+
+@keyframes spin-pixel {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(90deg); }
+  50% { transform: rotate(180deg); }
+  75% { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
 }

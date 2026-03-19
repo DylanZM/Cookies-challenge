@@ -1,16 +1,91 @@
 ---
+import PixelCookie from './PixelCookie.astro';
+
+interface Props {
+  activePage?: string;
+}
+const { activePage = '' } = Astro.props;
 ---
 
-<nav class="flex flex-1 items-center justify-between py-3 px-4 text-[1rem] relative">
-  <a href="/" class="flex items-center gap-4">
-    <img src="/img/logo.png" alt="Logo" class="cursor-pointer hover:scale-105 transition-all duration-300 h-20 w-auto" />
-  </a>
-  
-  <div class="hidden md:flex items-center mr-10 gap-8 text-(--cookie-text) ">
-    <a href="/" class="font-semibold relative group menu-underline">Home</a>
-    <a href="/about" class="font-semibold relative group menu-underline">About</a>
-    <a href="/blog" class="font-semibold relative group menu-underline">Cookies</a>
+<header class="retro-header pixel-box">
+  <div class="header-inner">
+    
+    <!-- Retro Logo -->
+    <a href="/" class="logo-link">
+      <div class="logo-icon float-pixel">
+        <PixelCookie scale={2} />
+      </div>
+      <div class="logo-text">
+        <span class="text-retro-highlight">COOKIE</span><br/>
+        <span style="font-size: 0.6em; color: var(--cookie-edge);">CHALLENGE</span>
+      </div>
+    </a>
+
+    <!-- Nav links -->
+    <nav class="retro-nav">
+      <a href="/" class={`pixel-nav-link ${activePage === 'home' ? 'active' : ''}`}>
+        [ INICIO ]
+      </a>
+      <a href="/cookies" class={`pixel-nav-link ${activePage === 'cookies' ? 'active' : ''}`}>
+        [ GALLETA ]
+      </a>
+      <a href="/about" class={`pixel-nav-link ${activePage === 'about' ? 'active' : ''}`}>
+        [ INFO ]
+      </a>
+    </nav>
+
   </div>
+</header>
+
+<style>
+  .retro-header {
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+  }
+  .logo-text {
+    line-height: 1.2;
+  }
+
+  .retro-nav {
+    display: flex;
+    gap: 2rem;
+  }
+  .pixel-nav-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.1s;
+  }
+  .pixel-nav-link:hover {
+    color: var(--ui-hover);
+  }
+  .pixel-nav-link:active {
+    transform: translateY(2px);
+  }
+  .pixel-nav-link.active {
+    color: var(--text-highlight);
+    text-shadow: 2px 2px 0 var(--ui-shadow);
+  }
   
- 
-</nav>
+  @media (max-width: 768px) {
+    .header-inner { flex-direction: column; gap: 1rem; }
+    .retro-nav { gap: 1rem; font-size: 0.65rem; }
+  }
+</style>
