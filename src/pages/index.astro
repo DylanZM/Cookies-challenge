@@ -1,17 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
-import PixelCookie from '../components/PixelCookie.astro';
+import HeroPanel from '../components/HeroPanel.astro';
+import CookieCarousel from '../components/CookieCarousel.astro';
+import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import '../styles/pages.css';
-
-const cookieVariants = [
-  { id: 'original', name: 'Classic', dough: '#d28c46', chip: '#3a1f0b', light: '#e6ab67', dark: '#b36b2b', edge: '#824715' },
-  { id: 'macadamia', name: 'Macadamia', dough: '#e6ab67', chip: '#e6e6e6', light: '#f5cc99', dark: '#d28c46', edge: '#b36b2b' },
-  { id: 'darkchoc', name: 'Dark Choc', dough: '#5c3a21', chip: '#1a0f05', light: '#7a4d2c', dark: '#3d2616', edge: '#29190e' },
-  { id: 'avena', name: 'Oatmeal', dough: '#c29c76', chip: '#5c3a21', light: '#d6bba0', dark: '#a37c52', edge: '#7a5937' },
-  { id: 'golden', name: 'Golden', dough: '#ffb84d', chip: '#d28c46', light: '#ffd699', dark: '#e69900', edge: '#b37700' },
-];
 ---
 
 <Layout>
@@ -20,130 +14,10 @@ const cookieVariants = [
 
   <!-- ════ HERO ════ -->
   <main class="hero-container">
-    
-    <div class="hero-text-area pixel-box">
-      <h1 class="cursor-blink text-retro-highlight" style="font-size: 2rem; margin-bottom: 2rem;">
-        SELECT YOUR<br/>CHALLENGE
-      </h1>
-      <p style="font-size: 0.8rem; line-height: 1.8; margin-bottom: 2rem; opacity: 0.9;">
-        * ONE CHALLENGE PER DAY<br/>
-        * ALWAYS A SURPRISE<br/>
-        * 100% 8-BIT RETRO
-      </p>
-      
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <a href="/cookies" class="pixel-btn">
-          ▶ PRESS START
-        </a>
-        <a href="/about" class="pixel-btn pixel-btn-outline">
-          ? HOW TO PLAY
-        </a>
-      </div>
-    </div>
-
-    <!-- Right: Carousel -->
-    <div class="hero-carousel pixel-box" style="text-align: center;">
-      <h2 style="font-size: 1rem; margin-bottom: 2rem;" class="text-retro-highlight">
-        COOKIE SELECTOR
-      </h2>
-      
-      <div class="carousel-stage">
-        <div class="carousel-track" id="pixel-track">
-          {cookieVariants.map((v, i) => (
-             <div class="c-slide" data-index={i} data-id={v.id} data-colors={JSON.stringify(v)}>
-                <div class="cookie-render" style={`--p-dough: ${v.dough}; --p-chip: ${v.chip}; --p-light: ${v.light}; --p-dark: ${v.dark}; --p-edge: ${v.edge};`}>
-                  <PixelCookie scale={6} />
-                </div>
-                <div class="cookie-name">{v.name}</div>
-             </div>
-          ))}
-        </div>
-        
-        <button class="pixel-btn nav-btn prev" id="c-prev">◄</button>
-        <button class="pixel-btn nav-btn next" id="c-next">►</button>
-      </div>
-
-      <div style="margin-top: 1.5rem;">
-        <button id="select-btn" class="pixel-btn" style="width: 100%; max-width: 250px;">
-        [ EQUIP COOKIE ]
-        </button>
-      </div>
-      <div style="margin-top: 1rem; font-size: 0.6rem; color: var(--cookie-light);" id="equip-status">
-        SELECT YOUR DAILY AVATAR
-      </div>
-    </div>
-
+    <HeroPanel />
+    <CookieCarousel />
   </main>
 
-  <footer class="retro-footer">
-    (C) 2026 COOKIE CHALLENGE SYSTEM
-  </footer>
+  <Footer />
 </div>
 </Layout>
-
-<script>
-  const slides = document.querySelectorAll('.c-slide') as NodeListOf<HTMLElement>;
-  const prevBtn = document.getElementById('c-prev');
-  const nextBtn = document.getElementById('c-next');
-  const selectBtn = document.getElementById('select-btn');
-  const statusMsg = document.getElementById('equip-status');
-
-  if (slides.length > 0 && prevBtn && nextBtn && selectBtn) {
-    const N = slides.length;
-    let current = 0;
-    let autoPlay: number;
-
-    function updateCarousel() {
-      slides.forEach((slide, i) => {
-        let diff = i - current;
-        if (diff > Math.floor(N / 2))  diff -= N;
-        if (diff < -Math.floor(N / 2)) diff += N;
-
-        if (diff === 0) slide.dataset.pos = "0";
-        else if (diff === 1) slide.dataset.pos = "1";
-        else if (diff === -1) slide.dataset.pos = "-1";
-        else slide.dataset.pos = "hidden";
-      });
-    }
-
-    updateCarousel();
-
-    function startAuto() {
-      clearInterval(autoPlay);
-      autoPlay = window.setInterval(() => {
-        current = (current + 1) % N;
-        updateCarousel();
-      }, 3000);
-    }
-    startAuto();
-
-    nextBtn.addEventListener('click', () => {
-      current = (current + 1) % N;
-      updateCarousel();
-      startAuto();
-    });
-    
-    prevBtn.addEventListener('click', () => {
-      current = (current - 1 + N) % N;
-      updateCarousel();
-      startAuto();
-    });
-
-    selectBtn.addEventListener('click', () => {
-      const activeSlide = Array.from(slides).find(s => s.dataset.pos === "0");
-      if (activeSlide) {
-        const colors = activeSlide.dataset.colors;
-        if (colors) {
-          localStorage.setItem('cookie_variant', colors);
-          if (statusMsg) {
-            statusMsg.textContent = "EQUIPPED! REDIRECTING...";
-            statusMsg.style.color = "var(--text-highlight)";
-          }
-          setTimeout(() => {
-            window.location.href = '/cookies';
-          }, 800);
-        }
-      }
-    });
-  }
-</script>

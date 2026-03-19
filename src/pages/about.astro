@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
+import AboutIntro from "../components/AboutIntro.astro";
+import HowToPlay from "../components/HowToPlay.astro";
+import SystemSpecs from "../components/SystemSpecs.astro";
+import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import "../styles/pages.css";
 ---
@@ -10,86 +14,11 @@ import "../styles/pages.css";
     <Header activePage="about" />
 
     <main class="rpg-style">
-      <div class="pixel-box dialog-box" style="margin-bottom: 2rem;">
-        <h1
-          class="text-retro-highlight"
-          style="font-size: 1.4rem; margin-bottom: 1rem;"
-        >&gt; USER MANUAL v1.0
-        </h1>
-        <p style="font-size: 0.8rem; line-height: 2;">
-          WELCOME, PLAYER.<br /><br />
-          COOKIE CHALLENGE IS A DAILY QUEST SYSTEM ENCAPSULATED IN A DIGITAL FORTUNE COOKIE.<br /><br />
-          IT DOES NOT MATTER IF THE QUEST IS BIG OR SMALL. THE IMPORTANT THING IS TO COMPLETE IT AND LEVEL UP IN REAL LIFE.
-        </p>
-      </div>
-
-      <!-- Instruction Steps -->
-      <div
-        class="pixel-box"
-        style="margin-bottom: 2rem; border-color: var(--cookie-light);"
-      >
-        <h2
-          style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;"
-        >
-          [HOW TO PLAY]
-        </h2>
-
-        <div class="step">
-          <div class="step-num text-retro-highlight">01.</div>
-          <div class="step-text">
-            <strong>VISIT THE COOKIE SECTION</strong><br />
-            ENTER THE MAIN NAVIGATION MENU.
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num text-retro-highlight">02.</div>
-          <div class="step-text">
-            <strong>CLICK TO OPEN</strong><br />
-            THE COOKIE WILL REVEAL THE QUEST OF THE DAY.
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num text-retro-highlight">03.</div>
-          <div class="step-text">
-            <strong>WAIT FOR THE NEXT TURN</strong><br />
-            THE SERVER RESETS EVERY MIDNIGHT. ONLY ONE QUEST PER DAY.
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num text-retro-highlight">04.</div>
-          <div class="step-text">
-            <strong>BUILD YOUR STREAK</strong><br />
-            COME BACK DAILY TO BUILD YOUR FIRE STREAK AND UNLOCK BADGES.
-          </div>
-        </div>
-      </div>
-
-      <!-- System Specs -->
-      <div class="pixel-box" style="text-align: center;">
-        <h2
-          style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;"
-        >
-          [SYSTEM SPECIFICATIONS]
-        </h2>
-        <div
-          style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;"
-        >
-          <span class="tech-tag">ASTRO V.5</span>
-          <span class="tech-tag">TAILWIND 4</span>
-          <span class="tech-tag">CSS PIXEL ART ENGINE</span>
-        </div>
-
-        <div style="margin-top: 2rem;">
-          <a href="/cookies" class="pixel-btn"> ▶ START GAME</a>
-        </div>
-      </div>
+      <AboutIntro />
+      <HowToPlay />
+      <SystemSpecs />
     </main>
 
-    <footer class="retro-footer">
-      (C) 2026 COOKIE CHALLENGE SYSTEM
-    </footer>
+    <Footer />
   </div>
 </Layout>
