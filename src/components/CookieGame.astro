@@ -1,0 +1,172 @@
+---
+import PixelCookie from './PixelCookie.astro';
+import StreakCounter from './StreakCounter.astro';
+---
+
+<!-- Stage Header -->
+<div class="stage-header pixel-box" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+  <div>
+    <h1 class="text-retro-highlight" style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+      &gt; DAILY QUEST ENCOUNTER
+    </h1>
+    <p id="status-msg" style="font-size: 0.7rem; opacity: 0.8;">
+      CLICK THE COOKIE TO REVEAL YOUR CHALLENGE
+    </p>
+  </div>
+  <StreakCounter />
+</div>
+
+<!-- Gameplay Area -->
+<div
+  class="interactive-area pixel-box"
+  style="margin-top: 2rem; min-height: 400px; display: flex; align-items: center; justify-content: center; position: relative;"
+>
+  <!-- Unopened Cookie -->
+  <div id="cookie-unopened" class="float-pixel" style="cursor: pointer; z-index: 10;">
+    <PixelCookie scale={10} />
+  </div>
+
+  <!-- Broken Cookie Halves -->
+  <div
+    id="cookie-broken"
+    style="display: none; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;"
+  >
+    <div class="half-left"><PixelCookie scale={10} variant="left-half" /></div>
+    <div class="half-right"><PixelCookie scale={10} variant="right-half" /></div>
+  </div>
+
+  <!-- Reward Card -->
+  <div
+    id="challenge-card"
+    class="pixel-box"
+    style="display: none; position: absolute; z-index: 20; max-width: 400px; text-align: center; background: var(--ui-bg);"
+  >
+    <div class="text-retro-highlight blink-fast" style="font-size: 0.8rem; margin-bottom: 1rem;">
+      ⭐ NEW QUEST UNLOCKED ⭐
+    </div>
+    <p id="challenge-text" style="font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; color: var(--text-primary);"></p>
+    <div style="font-size: 0.6rem; color: var(--cookie-light); margin-bottom: 1rem;">
+      DATE: <span id="challenge-date"></span>
+    </div>
+    <div style="display: inline-block; background: var(--ui-shadow); color: var(--text-highlight); padding: 8px 16px; font-size: 0.6rem;">
+      RETURN TOMORROW TO CONTINUE
+    </div>
+  </div>
+
+  <!-- Already completed today -->
+  <div
+    id="already-done"
+    style="display: none; position: absolute; inset: 0; z-index: 20; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem;"
+  >
+    <div class="pixel-box" style="max-width: 380px; background: var(--ui-bg);">
+      <div class="text-retro-highlight" style="font-size: 1rem; margin-bottom: 1rem;">[ QUEST COMPLETED ]</div>
+      <p id="saved-challenge" style="font-size: 0.8rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--text-primary);"></p>
+      <div style="font-size: 0.6rem; color: var(--cookie-light); margin-bottom: 1rem;">
+        DATE: <span id="saved-date"></span>
+      </div>
+      <div style="font-size: 0.55rem; opacity: 0.7;">SAVE GAME &amp; RETURN TOMORROW</div>
+    </div>
+  </div>
+
+  <!-- Hint bar -->
+  <div
+    id="already-hint"
+    style="display: none; position: absolute; bottom: -30px; font-size: 0.6rem; color: var(--cookie-light); width: 100%; text-align: center;"
+  >
+    [ QUEST COMPLETED TODAY. SAVING GAME... ]
+  </div>
+</div>
+
+<script>
+  const unopened        = document.getElementById("cookie-unopened");
+  const broken          = document.getElementById("cookie-broken");
+  const card            = document.getElementById("challenge-card");
+  const challengeTxt    = document.getElementById("challenge-text");
+  const dateTxt         = document.getElementById("challenge-date");
+  const statusMsg       = document.getElementById("status-msg");
+  const alreadyHint     = document.getElementById("already-hint");
+  const alreadyDone     = document.getElementById("already-done");
+  const savedChallengeTxt = document.getElementById("saved-challenge");
+  const savedDateTxt    = document.getElementById("saved-date");
+
+  if (!unopened || !broken || !card || !challengeTxt || !dateTxt)
+    throw new Error("CookieGame: DOM Missing");
+
+  // Apply saved cookie variant colors
+  const savedColorsStr = localStorage.getItem("cookie_variant");
+  if (savedColorsStr) {
+    try {
+      const colors = JSON.parse(savedColorsStr);
+      [unopened, broken].forEach(el => {
+        el.style.setProperty("--p-dough", colors.dough);
+        el.style.setProperty("--p-chip",  colors.chip);
+        el.style.setProperty("--p-light", colors.light);
+        el.style.setProperty("--p-dark",  colors.dark);
+        el.style.setProperty("--p-edge",  colors.edge);
+      });
+    } catch (e) { console.error("Error loading cookie variant", e); }
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  const formattedDate = new Date(today + "T12:00:00")
+    .toLocaleDateString("en-US", { weekday: "short", day: "2-digit", month: "short" })
+    .toUpperCase();
+
+  // Check daily limit
+  const savedEntry = localStorage.getItem("cookie_today");
+  let alreadyOpenedToday = false;
+
+  if (savedEntry) {
+    try {
+      const entry = JSON.parse(savedEntry);
+      if (entry.date === today) {
+        alreadyOpenedToday = true;
+        unopened.style.display = "none";
+        if (alreadyDone) {
+          alreadyDone.style.display = "flex";
+          if (savedChallengeTxt) savedChallengeTxt.textContent = entry.challenge;
+          if (savedDateTxt)      savedDateTxt.textContent = formattedDate;
+        }
+        if (statusMsg) statusMsg.textContent = "[ QUEST ALREADY COMPLETED TODAY ]";
+      }
+    } catch { /* ignore */ }
+  }
+
+  function showReward(challenge: string, isImmediate: boolean) {
+    challengeTxt!.textContent = challenge;
+    dateTxt!.textContent = formattedDate;
+    localStorage.setItem("cookie_today", JSON.stringify({ date: today, challenge }));
+
+    if (typeof (window as any).incrementStreak === 'function') {
+      (window as any).incrementStreak();
+    }
+
+    if (isImmediate) {
+      unopened!.style.display = "none";
+      card!.style.display = "block";
+    } else {
+      unopened!.style.display = "none";
+      broken!.style.display = "block";
+      broken!.classList.add("anim-break");
+      setTimeout(() => { card!.style.display = "block"; }, 600);
+    }
+
+    if (statusMsg) statusMsg.textContent = "QUEST DISCOVERED";
+    if (alreadyHint) alreadyHint.style.display = "block";
+  }
+
+  if (!alreadyOpenedToday) {
+    const handleOpen = () => {
+      unopened!.removeEventListener("click", handleOpen);
+      if (statusMsg) statusMsg.textContent = "[ CONTACTING AI ORACLE... ]";
+      unopened!.style.pointerEvents = 'none';
+      unopened!.style.opacity = '0.7';
+
+      fetch('/api/challenge', { method: 'POST' })
+        .then(res => res.json())
+        .then(data => showReward(data.challenge, false))
+        .catch(err => { console.error(err); showReward("Take 5 deep breaths (Server Error)", false); });
+    };
+    unopened.addEventListener("click", handleOpen);
+  }
+</script>

@@ -1,0 +1,23 @@
+---
+const steps = [
+  { num: '01', title: 'VISIT THE COOKIE SECTION',  desc: 'ENTER THE MAIN NAVIGATION MENU.' },
+  { num: '02', title: 'CLICK TO OPEN',              desc: 'THE COOKIE WILL REVEAL THE QUEST OF THE DAY.' },
+  { num: '03', title: 'WAIT FOR THE NEXT TURN',     desc: 'THE SERVER RESETS EVERY MIDNIGHT. ONLY ONE QUEST PER DAY.' },
+  { num: '04', title: 'BUILD YOUR STREAK',          desc: 'COME BACK DAILY TO BUILD YOUR FIRE STREAK AND UNLOCK BADGES.' },
+];
+---
+
+<div class="pixel-box" style="margin-bottom: 2rem; border-color: var(--cookie-light);">
+  <h2 style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;">
+    [HOW TO PLAY]
+  </h2>
+  {steps.map(s => (
+    <div class="step">
+      <div class="step-num text-retro-highlight">{s.num}.</div>
+      <div class="step-text">
+        <strong>{s.title}</strong><br />
+        {s.desc}
+      </div>
+    </div>
+  ))}
+</div>

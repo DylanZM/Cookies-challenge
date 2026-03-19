@@ -1,0 +1,17 @@
+---
+const tags = ['ASTRO V.5', 'TAILWIND 4', 'GEMINI AI', 'LOCALSTORAGE I/O', 'CSS PIXEL ART ENGINE'];
+---
+
+<div class="pixel-box" style="text-align: center;">
+  <h2 style="font-size: 1rem; color: var(--cookie-light); margin-bottom: 1.5rem;">
+    [SYSTEM SPECIFICATIONS]
+  </h2>
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+    {tags.map(tag => (
+      <span class="tech-tag">{tag}</span>
+    ))}
+  </div>
+  <div style="margin-top: 2rem;">
+    <a href="/cookies" class="pixel-btn">▶ START GAME</a>
+  </div>
+</div>
