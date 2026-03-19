@@ -146,8 +146,6 @@ import "../styles/global.css";
 </style>
 
 <script>
-  import { getRandomChallenge } from "../data/challenges";
-
   const unopened = document.getElementById("cookie-unopened");
   const broken = document.getElementById("cookie-broken");
   const card = document.getElementById("challenge-card");
@@ -177,11 +175,9 @@ import "../styles/global.css";
   }
 
   const today = new Date().toISOString().split("T")[0];
-  const savedDate = localStorage.getItem("pixel_last_date");
-  const savedChallenge = localStorage.getItem("pixel_current_challenge");
 
   const formattedDate = new Date(today + "T12:00:00")
-    .toLocaleDateString("es-ES", {
+    .toLocaleDateString("en-US", {
       weekday: "short",
       day: "2-digit",
       month: "short",
@@ -212,10 +208,20 @@ import "../styles/global.css";
 
   const handleOpen = () => {
     unopened.removeEventListener("click", handleOpen);
-    const challenge = getRandomChallenge();
-    localStorage.setItem("pixel_last_date", today);
-    localStorage.setItem("pixel_current_challenge", challenge);
-    showReward(challenge, false);
+    
+    if (statusMsg) statusMsg.textContent = "[ CONTACTING AI ORACLE... ]";
+    unopened.style.pointerEvents = 'none';
+    unopened.style.opacity = '0.7';
+
+    fetch('/api/challenge', { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        showReward(data.challenge, false);
+      })
+      .catch(err => {
+        console.error(err);
+        showReward("Take 5 deep breaths (Server Error)", false);
+      });
   };
 
   unopened.addEventListener("click", handleOpen);
