@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-// Initialize the API only if we have a key
 const API_KEY = process.env.GEMINI_API_KEY || import.meta.env.GEMINI_API_KEY;
 
 export const POST: APIRoute = async () => {
@@ -19,7 +18,6 @@ export const POST: APIRoute = async () => {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const prompt = "Generate a single, short, random daily challenge for personal growth, health, or mindfulness in English. It must be 1 sentence max. Just return the text of the challenge, no quotes, no extra formatting. Make it sound like a fun real-life quest.";
     
-    // We fetch from Gemini API
     const result = await model.generateContent(prompt);
     const text = result.response.text().replace(/"/g, "").trim();
     
