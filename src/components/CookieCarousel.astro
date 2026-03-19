@@ -1,5 +1,6 @@
 ---
 import PixelCookie from './PixelCookie.astro';
+import Button from './Button.astro';
 
 const cookieVariants = [
   { id: 'original',  name: 'Classic',    dough: '#d28c46', chip: '#3a1f0b', light: '#e6ab67', dark: '#b36b2b', edge: '#824715' },
@@ -27,14 +28,14 @@ const cookieVariants = [
       ))}
     </div>
 
-    <button class="pixel-btn nav-btn prev" id="c-prev">◄</button>
-    <button class="pixel-btn nav-btn next" id="c-next">►</button>
+    <Button class="nav-btn prev" id="c-prev">◄</Button>
+    <Button class="nav-btn next" id="c-next">►</Button>
   </div>
 
   <div style="margin-top: 1.5rem;">
-    <button id="select-btn" class="pixel-btn" style="width: 100%; max-width: 250px;">
+    <Button id="select-btn" style="white-space: nowrap;">
       [ EQUIP COOKIE ]
-    </button>
+    </Button>
   </div>
   <div style="margin-top: 1rem; font-size: 0.6rem; color: var(--cookie-light);" id="equip-status">
     SELECT YOUR DAILY AVATAR

@@ -1,4 +1,5 @@
 ---
+import Button from './Button.astro';
 ---
 <div class="hero-text-area pixel-box">
   <h1 class="cursor-blink text-retro-highlight" style="font-size: 2rem; margin-bottom: 2rem;">
@@ -11,11 +12,11 @@
   </p>
 
   <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-    <a href="/cookies" class="pixel-btn">
+    <Button href="/cookies">
       ▶ PRESS START
-    </a>
-    <a href="/about" class="pixel-btn pixel-btn-outline">
+    </Button>
+    <Button href="/about" class="pixel-btn-outline">
       ? HOW TO PLAY
-    </a>
+    </Button>
   </div>
 </div>

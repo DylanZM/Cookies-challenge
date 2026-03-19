@@ -1,0 +1,19 @@
+---
+interface Props {
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+}
+
+const { href, type = "button", class: className = "", id, style, title } = Astro.props;
+
+const Element = href ? "a" : "button";
+const props = href ? { href, class: `pixel-btn ${className}`, id, style, title } : { type, class: `pixel-btn ${className}`, id, style, title };
+---
+
+<Element {...props}>
+  <slot />
+</Element>
