@@ -1,22 +1,22 @@
 export const challenges = [
-  "Hazle un cumplido sincero a alguien hoy.",
-  "Bebe al menos 2 litros de agua durante el día.",
-  "Aprende una palabra nueva y úsala en una conversación.",
-  "Dedica 15 minutos a meditar o respirar profundamente.",
-  "Escribe tres cosas por las que estés agradecido hoy.",
-  "Da un paseo de 20 minutos sin mirar tu teléfono.",
-  "Lee al menos 10 páginas de un libro.",
-  "Prueba una comida o receta nueva.",
-  "Organiza y limpia tu espacio de trabajo o habitación.",
-  "Envía un mensaje a un amigo con el que no has hablado en un tiempo.",
-  "Haz una pequeña acción amable y anónima por alguien.",
-  "Desconéctate de las redes sociales por 24 horas.",
-  "Dibuja algo durante 10 minutos, no importa si no eres bueno.",
-  "Escucha un podcast o charla sobre un tema que desconozcas.",
-  "Haz 15 minutos de estiramientos o yoga."
+  "Write down three things you are grateful for today.",
+  "Drink an extra glass of water right now.",
+  "Do 10 minutes of physical stretching.",
+  "Send a message appreciating a friend or family member.",
+  "Read an article or a chapter of a book on a new topic.",
+  "Spend 15 minutes organizing a messy physical space.",
+  "Take a 15-minute walk outside without looking at your phone.",
+  "Try a new healthy recipe or cook something different.",
+  "Meditate or do deep breathing exercises for 5 minutes.",
+  "Write down a personal goal for this week and one step to achieve it.",
+  "Compliment a stranger or a coworker today.",
+  "Unfollow 5 accounts on social media that don't bring you joy.",
+  "Listen to an album you've never heard before from start to finish.",
+  "Practice a hobby you enjoy but haven't done in a while for 20 minutes.",
+  "Go to bed 30 minutes earlier than your usual time."
 ];
 
-export function getRandomChallenge() {
+export function getRandomChallenge(): string {
   const randomIndex = Math.floor(Math.random() * challenges.length);
   return challenges[randomIndex];
 }

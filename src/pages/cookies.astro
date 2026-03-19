@@ -16,7 +16,7 @@ import '../styles/global.css';
         &gt; DAILY QUEST ENCOUNTER
       </h1>
       <p id="status-msg" style="font-size: 0.7rem; opacity: 0.8;">
-        CLICK LA GALLETA PARA DESCUBRIR TU RETO
+        CLICK THE COOKIE TO REVEAL YOUR CHALLENGE
       </p>
     </div>
 
@@ -41,23 +41,23 @@ import '../styles/global.css';
       <!-- Reward Card (Hidden Initially) -->
       <div id="challenge-card" class="pixel-box" style="display: none; position: absolute; z-index: 20; max-width: 400px; text-align: center; background: var(--ui-bg);">
         <div class="text-retro-highlight blink-fast" style="font-size: 0.8rem; margin-bottom: 1rem;">
-          ⭐ NUEVO RETO DESBLOQUEADO ⭐
+          ⭐ NEW QUEST UNLOCKED ⭐
         </div>
         
         <p id="challenge-text" style="font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; color: var(--text-primary);"></p>
         
         <div style="font-size: 0.6rem; color: var(--cookie-light); margin-bottom: 1rem;">
-          FECHA: <span id="challenge-date"></span>
+          DATE: <span id="challenge-date"></span>
         </div>
 
         <div style="display: inline-block; background: var(--ui-shadow); color: var(--text-highlight); padding: 8px 16px; font-size: 0.6rem;">
-          VUELVE MAÑANA PARA CONTINUAR
+          RETURN TOMORROW TO CONTINUE
         </div>
       </div>
 
       <!-- Hint if already completed today -->
       <div id="already-hint" style="display: none; position: absolute; bottom: -30px; font-size: 0.6rem; color: var(--cookie-light); width: 100%; text-align: center;">
-        [ QUEST COMPLETADA HOY. GUARDANDO PARTIDA... ]
+        [ QUEST COMPLETED TODAY. SAVING GAME... ]
       </div>
 
     </div>
@@ -162,7 +162,7 @@ import '../styles/global.css';
       }, 600);
     }
 
-    if (statusMsg) statusMsg.textContent = 'RETO DESCUBIERTO';
+    if (statusMsg) statusMsg.textContent = 'QUEST DISCOVERED';
     if (alreadyHint) alreadyHint.style.display = 'block';
   }
 

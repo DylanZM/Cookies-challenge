@@ -5,13 +5,13 @@
   --bg-color: #2b1f15;
   --text-primary: #f2e2ce;
   --text-highlight: #ffb84d;
-  
+
   --cookie-base: #d28c46;
   --cookie-light: #e6ab67;
   --cookie-dark: #b36b2b;
   --cookie-edge: #824715;
   --choc-chip: #3a1f0b;
-  
+
   /* Retro UI colors */
   --ui-bg: #4a3424;
   --ui-border: #1a1007;
@@ -20,10 +20,12 @@
   --ui-shadow: #1a1007;
 
   /* Pixel size multiplier */
-  --px: 4px; 
+  --px: 4px;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -36,7 +38,12 @@ body {
   font-smooth: never;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -49,7 +56,7 @@ h1, h2, h3, h4, h5, h6 {
 .pixel-box {
   background-color: var(--ui-bg);
   border: var(--px) solid var(--ui-border);
-  box-shadow: 
+  box-shadow:
     calc(var(--px) * 2) calc(var(--px) * 2) 0 0 var(--ui-shadow);
   padding: 2rem;
   position: relative;
@@ -58,8 +65,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Internal inset shadow for 8-bit depth */
 .pixel-box::inset {
-  box-shadow: inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0,0,0,0.3),
-              inset var(--px) var(--px) 0 0 rgba(255,255,255,0.1);
+  box-shadow: inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0, 0, 0, 0.3),
+    inset var(--px) var(--px) 0 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Retro Button */
@@ -73,9 +80,9 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   padding: 1rem 1.5rem;
   border: calc(var(--px) * 1) solid var(--ui-border);
-  box-shadow: 
-    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0,0,0,0.4),
-    inset var(--px) var(--px) 0 0 rgba(255,255,255,0.4),
+  box-shadow:
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0, 0, 0, 0.4),
+    inset var(--px) var(--px) 0 0 rgba(255, 255, 255, 0.4),
     calc(var(--px) * 2) calc(var(--px) * 2) 0 0 var(--ui-shadow);
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s;
@@ -88,9 +95,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .pixel-btn:active {
   transform: translate(calc(var(--px) * 2), calc(var(--px) * 2));
-  box-shadow: 
-    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0,0,0,0.4),
-    inset var(--px) var(--px) 0 0 rgba(255,255,255,0.4),
+  box-shadow:
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 rgba(0, 0, 0, 0.4),
+    inset var(--px) var(--px) 0 0 rgba(255, 255, 255, 0.4),
     0 0 0 0 var(--ui-shadow);
 }
 
@@ -98,23 +105,33 @@ h1, h2, h3, h4, h5, h6 {
   background-color: transparent;
   color: var(--text-highlight);
 }
+
 .pixel-btn-outline:hover {
-  background-color: rgba(255,184,77,0.1);
+  background-color: rgba(255, 184, 77, 0.1);
 }
 
-/* Text Highlights */
+/* text highlights */
 .text-retro-highlight {
   color: var(--text-highlight);
   text-shadow: calc(var(--px) * 1) calc(var(--px) * 1) 0 var(--ui-shadow);
 }
 
 /* ─────────────────────────────────────────────────────────
-   KEYFRAMES
+   animations
    ───────────────────────────────────────────────────────── */
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
+
 .cursor-blink::after {
   content: "█";
   animation: blink 1s step-end infinite;
@@ -123,17 +140,39 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes float-pixel {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(var(--px)); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(var(--px));
+  }
 }
+
 .float-pixel {
   animation: float-pixel 1s steps(2, end) infinite;
 }
 
 @keyframes spin-pixel {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(90deg); }
-  50% { transform: rotate(180deg); }
-  75% { transform: rotate(270deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(90deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(270deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
