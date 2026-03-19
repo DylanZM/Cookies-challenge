@@ -1,133 +1,19 @@
 ---
-// Streak Counter Component - Shows consecutive days completed
+import '../styles/streak.css';
 ---
 
 <div id="streak-display" class="streak-container pixel-box">
-  <div class="streak-icon">🔥</div>
+  <div class="streak-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M13 16h2v4h2v2H7v-2h2v-4h2v-2h2v2Zm-6 4H5v-2h2v2Zm12 0h-2v-2h2v2ZM5 18H3v-8h2v8Zm16 0h-2v-6h2v6Zm-6-6h-2v-2h2v2Zm4 0h-2v-2h2v2ZM7 10H5V8h2v2Zm6 0h-2V6h2v4Zm4 0h-2V8h2v2ZM9 8H7V6h2v2Zm2-2H9V2h2v4Z"/>
+    </svg>
+  </div>
   <div class="streak-content">
     <div class="streak-number" id="streak-number">0</div>
     <div class="streak-label">DAY STREAK</div>
   </div>
   <div id="streak-badge" class="streak-badge"></div>
 </div>
-
-<style>
-  .streak-container {
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    background: linear-gradient(135deg, var(--ui-bg) 0%, #3a2818 100%);
-    border: calc(var(--px) * 1) solid var(--text-highlight);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .streak-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,184,77,0.3), transparent);
-    animation: shine 3s infinite;
-  }
-
-  @keyframes shine {
-    0% { left: -100%; }
-    100% { left: 100%; }
-  }
-
-  .streak-icon {
-    font-size: 2rem;
-    animation: flicker-fire 0.3s steps(2) infinite;
-    filter: drop-shadow(0 0 8px rgba(255,100,0,0.8));
-  }
-
-  @keyframes flicker-fire {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-
-  .streak-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .streak-number {
-    font-size: 1.5rem;
-    color: var(--text-highlight);
-    text-shadow: 
-      2px 2px 0 var(--ui-shadow),
-      0 0 12px rgba(255,184,77,0.6);
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { 
-      text-shadow: 
-        2px 2px 0 var(--ui-shadow),
-        0 0 12px rgba(255,184,77,0.6);
-    }
-    50% { 
-      text-shadow: 
-        2px 2px 0 var(--ui-shadow),
-        0 0 20px rgba(255,184,77,1);
-    }
-  }
-
-  .streak-number.streak-increase {
-    animation: streak-pop 0.6s steps(4) forwards, pulse-glow 2s ease-in-out infinite;
-  }
-
-  @keyframes streak-pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.5); color: #ffff00; }
-    100% { transform: scale(1); }
-  }
-
-  .streak-label {
-    font-size: 0.5rem;
-    color: var(--cookie-light);
-    letter-spacing: 1px;
-  }
-
-  .streak-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    font-size: 1.2rem;
-    animation: bounce-pixel 1s steps(2) infinite;
-  }
-
-  @keyframes bounce-pixel {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-
-  /* Confetti effect when streak increases */
-  .confetti-particle {
-    position: absolute;
-    width: calc(var(--px) * 2);
-    height: calc(var(--px) * 2);
-    pointer-events: none;
-    z-index: 100;
-  }
-
-  @keyframes confetti-burst {
-    0% {
-      transform: translate(0, 0) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(var(--tx), var(--ty)) rotate(360deg);
-      opacity: 0;
-    }
-  }
-</style>
 
 <script>
   interface StreakData {
@@ -136,105 +22,97 @@
   }
 
   function getStreak(): StreakData {
-    const stored = localStorage.getItem('cookie_streak');
-    if (!stored) return { count: 0, lastDate: '' };
+    const stored = localStorage.getItem("cookie_streak");
+    if (!stored) return { count: 0, lastDate: "" };
     try {
       return JSON.parse(stored);
     } catch {
-      return { count: 0, lastDate: '' };
+      return { count: 0, lastDate: "" };
     }
   }
 
   function saveStreak(data: StreakData) {
-    localStorage.setItem('cookie_streak', JSON.stringify(data));
+    localStorage.setItem("cookie_streak", JSON.stringify(data));
   }
 
   function getToday(): string {
-    return new Date().toISOString().split('T')[0];
+    return new Date().toISOString().split("T")[0];
   }
 
   function getYesterday(): string {
     const d = new Date();
     d.setDate(d.getDate() - 1);
-    return d.toISOString().split('T')[0];
+    return d.toISOString().split("T")[0];
   }
 
   function updateStreakCounter(newStreak: boolean = false) {
     const streak = getStreak();
-    const numberEl = document.getElementById('streak-number');
-    const badgeEl = document.getElementById('streak-badge');
+    const numberEl = document.getElementById("streak-number");
+    const badgeEl = document.getElementById("streak-badge");
 
     if (numberEl) {
       numberEl.textContent = streak.count.toString();
-      
+
       if (newStreak) {
-        numberEl.classList.add('streak-increase');
-        setTimeout(() => numberEl.classList.remove('streak-increase'), 600);
+        numberEl.classList.add("streak-increase");
+        setTimeout(() => numberEl.classList.remove("streak-increase"), 600);
         createConfetti();
       }
     }
 
-    // Update badge based on streak milestones
     if (badgeEl) {
-      if (streak.count >= 30) badgeEl.textContent = '👑';
-      else if (streak.count >= 14) badgeEl.textContent = '💎';
-      else if (streak.count >= 7) badgeEl.textContent = '⭐';
-      else if (streak.count >= 3) badgeEl.textContent = '✨';
-      else badgeEl.textContent = '';
+      if (streak.count >= 30) badgeEl.textContent = "👑";
+      else if (streak.count >= 14) badgeEl.textContent = "💎";
+      else if (streak.count >= 7) badgeEl.textContent = "⭐";
+      else if (streak.count >= 3) badgeEl.textContent = "✨";
+      else badgeEl.textContent = "";
     }
   }
 
   function createConfetti() {
-    const container = document.getElementById('streak-display');
+    const container = document.getElementById("streak-display");
     if (!container) return;
 
-    const colors = ['#ffb84d', '#d28c46', '#e6ab67', '#ff6b6b', '#4ecdc4'];
-    
+    const colors = ["#ffb84d", "#d28c46", "#e6ab67", "#ff6b6b", "#4ecdc4"];
+
     for (let i = 0; i < 12; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'confetti-particle';
+      const particle = document.createElement("div");
+      particle.className = "confetti-particle";
       particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-      
+
       const angle = (Math.PI * 2 * i) / 12;
       const distance = 60 + Math.random() * 40;
       const tx = Math.cos(angle) * distance;
       const ty = Math.sin(angle) * distance;
-      
-      particle.style.setProperty('--tx', `${tx}px`);
-      particle.style.setProperty('--ty', `${ty}px`);
-      particle.style.left = '50%';
-      particle.style.top = '50%';
-      
+
+      particle.style.setProperty("--tx", `${tx}px`);
+      particle.style.setProperty("--ty", `${ty}px`);
+      particle.style.left = "50%";
+      particle.style.top = "50%";
       particle.style.animation = `confetti-burst 0.8s steps(6) forwards`;
       particle.style.animationDelay = `${i * 0.02}s`;
-      
+
       container.appendChild(particle);
-      
       setTimeout(() => particle.remove(), 1000);
     }
   }
 
-  // Initialize streak counter on load
   updateStreakCounter();
 
-  // Export function for cookies page to call when quest is completed
-  (window as any).incrementStreak = function() {
+  (window as any).incrementStreak = function () {
     const today = getToday();
     const yesterday = getYesterday();
     const streak = getStreak();
 
     if (streak.lastDate === today) {
-      // Already completed today
       return streak.count;
     } else if (streak.lastDate === yesterday) {
-      // Consecutive day!
       streak.count++;
       streak.lastDate = today;
       saveStreak(streak);
       updateStreakCounter(true);
       return streak.count;
     } else {
-      // Streak broken, start over
       streak.count = 1;
       streak.lastDate = today;
       saveStreak(streak);

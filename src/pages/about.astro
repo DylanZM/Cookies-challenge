@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import "../styles/global.css";
+import "../styles/pages.css";
 ---
 
 <Layout>
@@ -56,6 +57,14 @@ import "../styles/global.css";
             THE SERVER RESETS EVERY MIDNIGHT. ONLY ONE QUEST PER DAY.
           </div>
         </div>
+
+        <div class="step">
+          <div class="step-num text-retro-highlight">04.</div>
+          <div class="step-text">
+            <strong>BUILD YOUR STREAK</strong><br />
+            COME BACK DAILY TO BUILD YOUR FIRE STREAK AND UNLOCK BADGES.
+          </div>
+        </div>
       </div>
 
       <!-- System Specs -->
@@ -70,6 +79,7 @@ import "../styles/global.css";
         >
           <span class="tech-tag">ASTRO V.5</span>
           <span class="tech-tag">TAILWIND 4</span>
+          <span class="tech-tag">GEMINI AI</span>
           <span class="tech-tag">LOCALSTORAGE I/O</span>
           <span class="tech-tag">CSS PIXEL ART ENGINE</span>
         </div>
@@ -80,50 +90,8 @@ import "../styles/global.css";
       </div>
     </main>
 
-    <footer
-      style="text-align: center; margin-top: 4rem; padding: 2rem; font-size: 0.6rem; opacity: 0.5;"
-    >
-      (C) 2024 COOKIE CHALLENGE SYSTEM
+    <footer class="retro-footer">
+      (C) 2026 COOKIE CHALLENGE SYSTEM
     </footer>
   </div>
 </Layout>
-
-<style>
-  .retro-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1rem;
-    min-height: 100vh;
-  }
-
-  .rpg-style {
-    margin-top: 2rem;
-  }
-
-  .step {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    align-items: flex-start;
-  }
-  .step-num {
-    font-size: 1.2rem;
-    margin-top: -0.2rem;
-  }
-  .step-text {
-    font-size: 0.75rem;
-    line-height: 1.8;
-    color: var(--text-primary);
-  }
-  .step-text strong {
-    color: var(--cookie-light);
-  }
-
-  .tech-tag {
-    background: var(--ui-shadow);
-    color: var(--text-highlight);
-    border: 2px solid var(--cookie-dark);
-    padding: 8px 12px;
-    font-size: 0.6rem;
-  }
-</style>

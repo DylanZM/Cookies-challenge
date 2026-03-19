@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import PixelCookie from "../components/PixelCookie.astro";
 import StreakCounter from "../components/StreakCounter.astro";
 import "../styles/global.css";
+import "../styles/pages.css";
 ---
 
 <Layout>
@@ -11,32 +12,23 @@ import "../styles/global.css";
     <Header activePage="cookies" />
 
     <main class="game-stage">
-      <div class="stage-header pixel-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-          <div>
-            <h1
-              class="text-retro-highlight"
-              style="font-size: 1.2rem; margin-bottom: 0.5rem;"
-            >
-              &gt; DAILY QUEST ENCOUNTER
-            </h1>
-            <p id="status-msg" style="font-size: 0.7rem; opacity: 0.8;">
-              CLICK THE COOKIE TO REVEAL YOUR CHALLENGE
-            </p>
-          </div>
-          <StreakCounter />
+      <div class="stage-header pixel-box" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+        <div>
+          <h1 class="text-retro-highlight" style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+            &gt; DAILY QUEST ENCOUNTER
+          </h1>
+          <p id="status-msg" style="font-size: 0.7rem; opacity: 0.8;">
+            CLICK THE COOKIE TO REVEAL YOUR CHALLENGE
+          </p>
         </div>
+        <StreakCounter />
       </div>
 
       <!-- Gameplay Area -->
       <div
         class="interactive-area pixel-box"
-        style="margin-top: 2rem; min-height: 400px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;"
-        id="game-area"
+        style="margin-top: 2rem; min-height: 400px; display: flex; align-items: center; justify-content: center; position: relative;"
       >
-        <!-- Cookie Crumbs Container -->
-        <div id="crumbs-container" style="position: absolute; inset: 0; pointer-events: none; z-index: 15;"></div>
-        
         <!-- Unopened Cookie (Full) -->
         <div
           id="cookie-unopened"
@@ -91,6 +83,23 @@ import "../styles/global.css";
           </div>
         </div>
 
+        <!-- Already completed today -->
+        <div
+          id="already-done"
+          style="display: none; position: absolute; inset: 0; z-index: 20; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem;"
+        >
+          <div class="pixel-box" style="max-width: 380px; background: var(--ui-bg);">
+            <div class="text-retro-highlight" style="font-size: 1rem; margin-bottom: 1rem;">
+              [ QUEST COMPLETED ]
+            </div>
+            <p id="saved-challenge" style="font-size: 0.8rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--text-primary);"></p>
+            <div style="font-size: 0.6rem; color: var(--cookie-light); margin-bottom: 1rem;">
+              DATE: <span id="saved-date"></span>
+            </div>
+            <div style="font-size: 0.55rem; opacity: 0.7;">SAVE GAME &amp; RETURN TOMORROW</div>
+          </div>
+        </div>
+
         <!-- Hint if already completed today -->
         <div
           id="already-hint"
@@ -101,100 +110,11 @@ import "../styles/global.css";
       </div>
     </main>
 
-    <footer
-      style="text-align: center; margin-top: 4rem; padding: 2rem; font-size: 0.6rem; opacity: 0.5;"
-    >
-      (C) 2024 COOKIE CHALLENGE SYSTEM
+    <footer class="retro-footer">
+      (C) 2026 COOKIE CHALLENGE SYSTEM
     </footer>
   </div>
 </Layout>
-
-<style>
-  .retro-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1rem;
-    min-height: 100vh;
-  }
-
-  .game-stage {
-    margin-top: 2rem;
-  }
-
-  /* Break Animation classes */
-  .anim-break .half-left {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: slideLeft 0.5s steps(4, end) forwards;
-  }
-  .anim-break .half-right {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: slideRight 0.5s steps(4, end) forwards;
-  }
-
-  @keyframes slideLeft {
-    to {
-      transform: translate(-150%, -50%);
-      opacity: 0;
-    }
-  }
-  @keyframes slideRight {
-    to {
-      transform: translate(50%, -50%);
-      opacity: 0;
-    }
-  }
-
-  .blink-fast {
-    animation: blink 0.5s steps(2, end) infinite;
-  }
-
-  /* ── Cookie Crumb Particles ── */
-  .cookie-crumb {
-    position: absolute;
-    pointer-events: none;
-    z-index: 15;
-    image-rendering: pixelated;
-  }
-
-  @keyframes crumb-burst-1 {
-    0% {
-      transform: translate(-50%, -50%) scale(1) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3) rotate(360deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes crumb-burst-2 {
-    0% {
-      transform: translate(-50%, -50%) scale(1) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.5) rotate(-360deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes crumb-burst-3 {
-    0% {
-      transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2) rotate(180deg);
-      opacity: 0;
-    }
-  }
-</style>
 
 <script>
   const unopened = document.getElementById("cookie-unopened");
@@ -204,6 +124,9 @@ import "../styles/global.css";
   const dateTxt = document.getElementById("challenge-date");
   const statusMsg = document.getElementById("status-msg");
   const alreadyHint = document.getElementById("already-hint");
+  const alreadyDone = document.getElementById("already-done");
+  const savedChallengeTxt = document.getElementById("saved-challenge");
+  const savedDateTxt = document.getElementById("saved-date");
 
   if (!unopened || !broken || !card || !challengeTxt || !dateTxt)
     throw new Error("DOM Missing");
@@ -226,99 +149,60 @@ import "../styles/global.css";
   }
 
   const today = new Date().toISOString().split("T")[0];
-
   const formattedDate = new Date(today + "T12:00:00")
-    .toLocaleDateString("en-US", {
-      weekday: "short",
-      day: "2-digit",
-      month: "short",
-    })
+    .toLocaleDateString("en-US", { weekday: "short", day: "2-digit", month: "short" })
     .toUpperCase();
 
-  function createCookieCrumbs() {
-    const container = document.getElementById('crumbs-container');
-    const unopenedRect = unopened!.getBoundingClientRect();
-    const containerRect = container!.getBoundingClientRect();
-    
-    const centerX = unopenedRect.left + unopenedRect.width / 2 - containerRect.left;
-    const centerY = unopenedRect.top + unopenedRect.height / 2 - containerRect.top;
-
-    const crumbCount = 20;
-    const colors = [
-      'var(--p-dough)', 
-      'var(--p-light)', 
-      'var(--p-dark)',
-      'var(--p-chip)'
-    ];
-
-    for (let i = 0; i < crumbCount; i++) {
-      const crumb = document.createElement('div');
-      crumb.className = 'cookie-crumb';
-      
-      const size = 8 + Math.random() * 16;
-      crumb.style.width = `${size}px`;
-      crumb.style.height = `${size}px`;
-      crumb.style.background = colors[Math.floor(Math.random() * colors.length)];
-      crumb.style.left = `${centerX}px`;
-      crumb.style.top = `${centerY}px`;
-      
-      const angle = (Math.PI * 2 * i) / crumbCount;
-      const distance = 100 + Math.random() * 150;
-      const dx = Math.cos(angle) * distance;
-      const dy = Math.sin(angle) * distance;
-      
-      crumb.style.setProperty('--dx', `${dx}px`);
-      crumb.style.setProperty('--dy', `${dy}px`);
-      
-      const animations = ['crumb-burst-1', 'crumb-burst-2', 'crumb-burst-3'];
-      const randomAnim = animations[Math.floor(Math.random() * animations.length)];
-      crumb.style.animation = `${randomAnim} 1s steps(8, end) forwards`;
-      crumb.style.animationDelay = `${i * 0.02}s`;
-      
-      // Add box-shadow for depth
-      crumb.style.boxShadow = '2px 2px 0 rgba(0,0,0,0.3)';
-      
-      container!.appendChild(crumb);
-      
-      setTimeout(() => crumb.remove(), 1200);
-    }
+  // ── Daily limit: Check if already opened today ──
+  const savedEntry = localStorage.getItem("cookie_today");
+  if (savedEntry) {
+    try {
+      const entry = JSON.parse(savedEntry);
+      if (entry.date === today) {
+        // Already done today — show saved result, hide cookie
+        unopened.style.display = "none";
+        if (alreadyDone) {
+          alreadyDone.style.display = "flex";
+          if (savedChallengeTxt) savedChallengeTxt.textContent = entry.challenge;
+          if (savedDateTxt) savedDateTxt.textContent = formattedDate;
+        }
+        if (statusMsg) statusMsg.textContent = "[ QUEST ALREADY COMPLETED TODAY ]";
+      }
+    } catch { /* ignore */ }
   }
 
   function showReward(challenge: string, isImmediate: boolean) {
     challengeTxt!.textContent = challenge;
     dateTxt!.textContent = formattedDate;
 
+    // Save today's challenge for next time
+    localStorage.setItem("cookie_today", JSON.stringify({ date: today, challenge }));
+
+    // Increment streak
+    if (typeof (window as any).incrementStreak === 'function') {
+      (window as any).incrementStreak();
+    }
+
     if (isImmediate) {
       unopened!.style.display = "none";
       card!.style.display = "block";
     } else {
-      // Create crumb particles
-      createCookieCrumbs();
-      
-      // Animate break
-      setTimeout(() => {
-        unopened!.style.display = "none";
-        broken!.style.display = "block";
-        broken!.classList.add("anim-break");
-      }, 100);
+      unopened!.style.display = "none";
+      broken!.style.display = "block";
+      broken!.classList.add("anim-break");
 
       setTimeout(() => {
         card!.style.display = "block";
-      }, 700);
+      }, 600);
     }
 
     if (statusMsg) statusMsg.textContent = "QUEST DISCOVERED";
     if (alreadyHint) alreadyHint.style.display = "block";
-    
-    // Increment streak when quest is revealed
-    if (typeof (window as any).incrementStreak === 'function') {
-      (window as any).incrementStreak();
-    }
   }
 
   const handleOpen = () => {
     unopened.removeEventListener("click", handleOpen);
-    
+
     if (statusMsg) statusMsg.textContent = "[ CONTACTING AI ORACLE... ]";
     unopened.style.pointerEvents = 'none';
     unopened.style.opacity = '0.7';
@@ -334,5 +218,8 @@ import "../styles/global.css";
       });
   };
 
-  unopened.addEventListener("click", handleOpen);
+  // Only attach click listener if not already done today
+  if (!savedEntry || (() => { try { return JSON.parse(savedEntry).date !== today; } catch { return true; } })()) {
+    unopened.addEventListener("click", handleOpen);
+  }
 </script>
