@@ -1,15 +1,12 @@
 import type { APIRoute } from 'astro';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import * as dotenv from 'dotenv';
 
-dotenv.config();
-
-const API_KEY = process.env.GEMINI_API_KEY || import.meta.env.GEMINI_API_KEY;
+const API_KEY = import.meta.env.GEMINI_API_KEY;
 
 export const POST: APIRoute = async () => {
   if (!API_KEY) {
     return new Response(JSON.stringify({ 
-      challenge: "Drink a glass of water (API Key missing in .env!)" 
+      challenge: "Drink a glass of water (API Key missing!)" 
     }), { status: 200, headers: { "Content-Type": "application/json" } });
   }
 
